@@ -1,0 +1,451 @@
+/**
+ * OpenClaw Popup Styles
+ */
+
+:root {
+  --oc-primary: #FF6B35;
+  --oc-primary-hover: #FF8C5A;
+  --oc-bg: #1E1E2E;
+  --oc-surface: #2D2D44;
+  --oc-surface-light: #3D3D5C;
+  --oc-text: #E0E0E0;
+  --oc-text-muted: #8888AA;
+  --oc-user-bubble: #FF6B35;
+  --oc-assistant-bubble: #3D3D5C;
+  --oc-danger: #FF4444;
+  --oc-safe: #44FF44;
+  --oc-warning: #FFAA00;
+  --oc-radius: 10px;
+  --oc-radius-sm: 6px;
+  --oc-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 400px;
+  height: 560px;
+  font-family: var(--oc-font);
+  font-size: 13px;
+  color: var(--oc-text);
+  background: var(--oc-bg);
+  overflow: hidden;
+}
+
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+}
+
+/* === Header === */
+.popup-header {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--oc-surface);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.popup-logo {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.popup-header-info h1 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--oc-text);
+}
+
+.popup-header-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-status {
+  font-size: 10px;
+  padding: 1px 8px;
+  border-radius: 8px;
+  font-weight: 500;
+  display: inline-block;
+  width: fit-content;
+}
+
+.popup-status.connected {
+  background: rgba(68, 255, 68, 0.15);
+  color: var(--oc-safe);
+}
+
+.popup-status.disconnected {
+  background: rgba(255, 68, 68, 0.15);
+  color: var(--oc-danger);
+}
+
+.popup-status.connecting {
+  background: rgba(255, 170, 0, 0.15);
+  color: var(--oc-warning);
+}
+
+/* === Messages === */
+.popup-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.popup-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.popup-messages::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.popup-welcome {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--oc-text-muted);
+}
+
+.popup-welcome-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.popup-welcome p {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* Message bubbles */
+.popup-msg {
+  max-width: 85%;
+  padding: 8px 12px;
+  border-radius: var(--oc-radius-sm);
+  font-size: 12.5px;
+  line-height: 1.5;
+  word-break: break-word;
+  white-space: pre-wrap;
+  animation: msg-in 0.2s ease;
+}
+
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.popup-msg.user {
+  align-self: flex-end;
+  background: var(--oc-user-bubble);
+  color: #fff;
+  border-bottom-right-radius: 3px;
+}
+
+.popup-msg.assistant {
+  align-self: flex-start;
+  background: var(--oc-assistant-bubble);
+  color: var(--oc-text);
+  border-bottom-left-radius: 3px;
+}
+
+.popup-msg.system {
+  align-self: center;
+  background: transparent;
+  color: var(--oc-text-muted);
+  font-size: 11px;
+  text-align: center;
+  max-width: 90%;
+}
+
+.popup-msg.error {
+  align-self: center;
+  background: rgba(255, 68, 68, 0.1);
+  color: var(--oc-danger);
+  font-size: 11px;
+  border: 1px solid rgba(255, 68, 68, 0.2);
+}
+
+.popup-msg .msg-time {
+  font-size: 9px;
+  opacity: 0.5;
+  margin-top: 4px;
+}
+
+.popup-msg.user .msg-time {
+  text-align: right;
+}
+
+/* Class badge */
+.popup-class-badge {
+  display: inline-block;
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 6px;
+  margin-top: 3px;
+  font-weight: 600;
+}
+
+.popup-class-badge.safe {
+  background: rgba(68, 255, 68, 0.15);
+  color: var(--oc-safe);
+}
+
+.popup-class-badge.sensitive {
+  background: rgba(255, 170, 0, 0.15);
+  color: var(--oc-warning);
+}
+
+.popup-class-badge.dangerous {
+  background: rgba(255, 68, 68, 0.15);
+  color: var(--oc-danger);
+}
+
+/* === Typing === */
+.popup-typing {
+  padding: 8px 16px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.popup-typing.hidden {
+  display: none;
+}
+
+.popup-typing .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--oc-text-muted);
+  animation: dot-bounce 1.4s ease-in-out infinite;
+}
+
+.popup-typing .dot:nth-child(1) { animation-delay: 0s; }
+.popup-typing .dot:nth-child(2) { animation-delay: 0.2s; }
+.popup-typing .dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-5px); }
+}
+
+/* === Input === */
+.popup-input-area {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--oc-surface);
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.popup-input-area textarea {
+  flex: 1;
+  background: var(--oc-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--oc-radius-sm);
+  color: var(--oc-text);
+  font-family: var(--oc-font);
+  font-size: 12.5px;
+  padding: 8px 10px;
+  resize: none;
+  outline: none;
+  max-height: 80px;
+  min-height: 18px;
+  line-height: 1.4;
+}
+
+.popup-input-area textarea:focus {
+  border-color: var(--oc-primary);
+}
+
+.popup-input-area textarea::placeholder {
+  color: var(--oc-text-muted);
+}
+
+.popup-input-area button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: var(--oc-primary);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.popup-input-area button:hover {
+  background: var(--oc-primary-hover);
+  transform: scale(1.05);
+}
+
+.popup-input-area button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* === Overlays === */
+.popup-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 30, 46, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.popup-overlay.hidden {
+  display: none;
+}
+
+.popup-card {
+  background: var(--oc-surface);
+  border-radius: var(--oc-radius);
+  padding: 24px;
+  width: 300px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.popup-card-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.popup-card h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.popup-card p {
+  font-size: 11px;
+  color: var(--oc-text-muted);
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+
+.popup-card input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--oc-radius-sm);
+  background: var(--oc-bg);
+  color: var(--oc-text);
+  font-size: 13px;
+  outline: none;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  font-family: var(--oc-font);
+}
+
+.popup-card input:focus {
+  border-color: var(--oc-primary);
+}
+
+.popup-error {
+  color: var(--oc-danger);
+  font-size: 11px;
+  min-height: 16px;
+  margin-bottom: 6px;
+}
+
+.popup-card button {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--oc-radius-sm);
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--oc-font);
+}
+
+.popup-card button.confirm,
+#popup-setup-btn {
+  background: var(--oc-primary);
+  color: #fff;
+}
+
+.popup-card button.confirm:hover,
+#popup-setup-btn:hover {
+  background: var(--oc-primary-hover);
+}
+
+.popup-card button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Password level badge */
+.popup-pw-level {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.popup-pw-level.sensitive {
+  background: rgba(255, 170, 0, 0.15);
+  color: var(--oc-warning);
+}
+
+.popup-pw-level.dangerous {
+  background: rgba(255, 68, 68, 0.15);
+  color: var(--oc-danger);
+}
+
+.popup-keywords {
+  font-size: 10px;
+  color: var(--oc-text-muted);
+  margin-bottom: 10px;
+  word-break: break-all;
+}
+
+.popup-keywords span {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin: 0 1px;
+}
+
+.popup-card-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.popup-card-btns button {
+  flex: 1;
+}
+
+.popup-card-btns button.cancel {
+  background: transparent;
+  color: var(--oc-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.popup-card-btns button.cancel:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--oc-text);
+}
