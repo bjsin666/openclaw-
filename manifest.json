@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "OpenClaw Browser Plugin",
+  "version": "1.0.0",
+  "description": "Browser extension to interact with local OpenClaw AI assistant. Send commands and receive responses with security middleware.",
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:18789/*",
+    "http://localhost:18789/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "lib/storage.js",
+        "lib/security.js",
+        "lib/openclaw-client.js",
+        "content/content.js"
+      ],
+      "css": [
+        "content/content.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "classic"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "OpenClaw",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
